@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER INFINITY WIN</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* Alinha itens no fundo */
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00FF00;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .container {
+            text-align: center;
+            background-color: transparent;
+            padding: 15px;
+            margin-bottom: 50px; /* Mover a informação mais para baixo */
+        }
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px #00FF00;
+        }
+        .status, .indicator {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .status {
+            color: yellow;
+        }
+        .indicator {
+            font-size: 1.8em;
+        }
+        .hack-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            color: #000;
+            background-color: #00FF00;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+        }
+        .hack-button:hover {
+            background-color: #00CC00;
+        }
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2em;
+            }
+            .status, .indicator {
+                font-size: 1.2em;
+            }
+            .hack-button {
+                font-size: 1.2em;
+                padding: 8px 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5em;
+            }
+            .status, .indicator {
+                font-size: 1em;
+            }
+            .hack-button {
+                font-size: 1em;
+                padding: 6px 12px;
+            }
+        }
+        .blinking-cursor-fast {
+            font-weight: bold;
+            font-size: 1em;
+            color: #00FF00;
+            animation: blink-fast 0.4s step-end infinite; /* Tempo de duração da animação ajustado para 0.5 segundos */
+        }
+        .blinking-cursor-normal {
+            font-weight: bold;
+            font-size: 1em;
+            color: #00FF00;
+            animation: blink-normal 1s step-end infinite;
+        }
+        @keyframes blink-fast {
+            from, to {
+                color: transparent;
+            }
+            50% {
+                color: #00FF00;
+            }
+        }
+        @keyframes blink-normal {
+            from, to {
+                color: transparent;
+            }
+            50% {
+                color: #00FF00;
+            }
+        }
+        .put {
+            color: red;
+        }
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-slide-up {
+            animation: fadeInSlideUp 1s ease-in-out;
+        }
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .slide-in-from-left {
+            animation: slideInFromLeft 1s ease-in-out;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .pulse {
+            animation: pulse 7s infinite;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="fundo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+   <!-- Novo elemento de áudio -->
+   <audio id="background-audio" src="inicio.mp3" autoplay></audio>
+
+    <div class="container">
+        <div class="logo fade-in-slide-up">HACKER INFINITY WIN</div>
+        <div class="status slide-in-from-left" id="status">Clique em Hackear Sinal <span class="blinking-cursor-fast">|</span></div>
+        <div class="indicator pulse" id="indicator"><span class="blinking-cursor-normal"></span></div>
+        <button class="hack-button fade-in-slide-up" onclick="startHacking()">HACKEAR SINAL</button>
+    </div>
+
+    <audio id="hack-sound" src="hacker.mp3"></audio>
+
+    <script>
+        // Função para atualizar o indicador dinamicamente
+        function updateIndicator(status, indicator) {
+            document.getElementById('status').innerHTML = status + ' <span class="blinking-cursor-fast">|</span>';
+            document.getElementById('indicator').innerHTML = indicator;
+        }
+
+        // Função para determinar se deve mostrar OTC
+        function startAnalysis() {
+            var currentTime = new Date();
+            var dayOfWeek = currentTime.getDay(); // 0 é Domingo, 6 é Sábado
+            var currentHour = currentTime.getHours();
+
+            var shouldShowOTC = false;
+            if (
+                (dayOfWeek >= 1 &&
+                    dayOfWeek <= 5 &&
+                    ((currentHour >= 16 && currentHour <= 23) ||
+                        (currentHour >= 0 && currentHour < 2))) ||
+                dayOfWeek === 0 ||
+                dayOfWeek === 6
+            ) {
+                shouldShowOTC = true;
+            }
+
+            var names = [
+                "AUD/JPY",
+                "EUR/USD",
+                "GBP/JPY",
+                "EUR/JPY",
+                "USD/JPY"
+            ];
+            if (shouldShowOTC) {
+                names = names.map((name) => name + "-OTC");
+            }
+            return names;
+        }
+
+        // Função para gerar um horário 2 minutos à frente do atual
+        function getFutureTime() {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() + 2);
+            return now.toTimeString().slice(0, 5);
+        }
+
+        // Função para escolher um ativo aleatório
+        function getRandomAsset(assets) {
+            return assets[Math.floor(Math.random() * assets.length)];
+        }
+
+        // Função para escolher aleatoriamente entre CALL e PUT
+        function getRandomDirection() {
+            return Math.random() < 0.5 ? 'CALL' : 'PUT';
+        }
+
+        // Array de mensagens de status
+        const statusMessages = [
+            "CONECTANDO A CORRETORA QUOTEX..",
+            "CONECTADO!",
+            "HACKEANDO SINAL..",
+            "SINAL HACKEADO!"
+        ];
+
+        // Índice da mensagem atual
+        let statusIndex = 0;
+
+        // Função para iniciar o processo de hacking
+        function startHacking() {
+            // Tocar o som
+            const audio = document.getElementById('hack-sound');
+            audio.play();
+
+            // Iniciar a atualização das mensagens
+            statusIndex = 0;
+            updateStatusMessages();
+        }
+
+        // Função para reproduzir o áudio de fundo
+    function playBackgroundAudio() {
+        const backgroundAudio = document.getElementById('background-audio');
+        backgroundAudio.play();
+    }
+
+        // Função para atualizar as mensagens de status
+        function updateStatusMessages() {
+            if (statusIndex < statusMessages.length - 1) {
+                updateIndicator(`<span class="slide-in-from-left">${statusMessages[statusIndex]}</span>`, `<span class="blinking-cursor-normal"></span> `);
+                statusIndex++;
+                setTimeout(updateStatusMessages, 3000);
+            } else {
+                const assets = startAnalysis();
+                const asset = getRandomAsset(assets);
+                const time = getFutureTime();
+                const direction = getRandomDirection();
+                const directionClass = direction === 'PUT' ? 'put' : '';
+                updateIndicator(`<span class="pulse">${statusMessages[statusIndex]}</span>`, `<span class="fade-in-slide-up">${asset} <span class="blinking-cursor-normal">|</span> <span class="${directionClass}">${direction}</span> <span class="blinking-cursor-normal">|</span> ${time}</span>`);
+            }
+        }
+    </script>
+</body>
+</html>
