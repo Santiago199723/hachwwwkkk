@@ -12,14 +12,14 @@
             height: 100%;
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* Alinha itens no fundo */
+            align-items: flex-end;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
             color: #00FF00;
         }
         .video-background {
             position: absolute;
-            top: 0;
+            top: 30;
             left: 0;
             width: 100%;
             height: 100%;
@@ -30,14 +30,17 @@
             text-align: center;
             background-color: transparent;
             padding: 15px;
-            margin-bottom: 50px; /* Mover a informação mais para baixo */
+            margin-bottom: 50px;
         }
         .logo {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 0 0 5px #00FF00;
-        }
+    width: 80%; /* Define a largura como 80% do contêiner pai */
+    max-width: 300px; /* Define uma largura máxima para garantir que a imagem não fique muito grande */
+    position: relative;
+    top: 50px; /* Ajuste este valor para mover a imagem para baixo */
+    animation: fadeInSlideUp 1s ease-in-out;
+}
+
+
         .status, .indicator {
             font-size: 1.5em;
             margin-top: 10px;
@@ -62,9 +65,6 @@
             background-color: #107c10;
         }
         @media (max-width: 768px) {
-            .logo {
-                font-size: 2em;
-            }
             .status, .indicator {
                 font-size: 1.2em;
             }
@@ -72,11 +72,11 @@
                 font-size: 1.2em;
                 padding: 8px 16px;
             }
+            .logo {
+                width: 150px; /* Ajuste o tamanho da imagem conforme necessário */
+            }
         }
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.5em;
-            }
             .status, .indicator {
                 font-size: 1em;
             }
@@ -84,12 +84,15 @@
                 font-size: 1em;
                 padding: 6px 12px;
             }
+            .logo {
+                width: 100px; /* Ajuste o tamanho da imagem conforme necessário */
+            }
         }
         .blinking-cursor-fast {
             font-weight: bold;
             font-size: 1em;
             color: #00FF00;
-            animation: blink-fast 0.4s step-end infinite; /* Tempo de duração da animação ajustado para 0.5 segundos */
+            animation: blink-fast 0.4s step-end infinite;
         }
         .blinking-cursor-normal {
             font-weight: bold;
@@ -164,11 +167,13 @@
         Your browser does not support the video tag.
     </video>
 
-   <!-- Novo elemento de áudio -->
-   <audio id="background-audio" src="inicio.mp3" autoplay></audio>
+    <!-- Novo elemento de áudio -->
+    <audio id="background-audio" src="inicio.mp3" autoplay></audio>
+    <audio id="compra-audio" src="compra.mp3"></audio>
+    <audio id="venda-audio" src="venda.mp3"></audio>
 
     <div class="container">
-        <div class="logo fade-in-slide-up">HACKER INFINITY WIN</div>
+        <img src="logo.png" alt="Logo" class="logo">
         <div class="status slide-in-from-left" id="status">Clique em Hackear Sinal <span class="blinking-cursor-fast">|</span></div>
         <div class="indicator pulse" id="indicator"><span class="blinking-cursor-normal"></span></div>
         <button class="hack-button fade-in-slide-up" onclick="startHacking()">HACKEAR SINAL</button>
@@ -186,7 +191,7 @@
         // Função para determinar se deve mostrar OTC
         function startAnalysis() {
             var currentTime = new Date();
-            var dayOfWeek = currentTime.getDay(); // 0 é Domingo, 6 é Sábado
+            var dayOfWeek = currentTime.getDay();
             var currentHour = currentTime.getHours();
 
             var shouldShowOTC = false;
@@ -244,20 +249,18 @@
 
         // Função para iniciar o processo de hacking
         function startHacking() {
-            // Tocar o som
             const audio = document.getElementById('hack-sound');
             audio.play();
 
-            // Iniciar a atualização das mensagens
             statusIndex = 0;
             updateStatusMessages();
         }
 
         // Função para reproduzir o áudio de fundo
-    function playBackgroundAudio() {
-        const backgroundAudio = document.getElementById('background-audio');
-        backgroundAudio.play();
-    }
+        function playBackgroundAudio() {
+            const backgroundAudio = document.getElementById('background-audio');
+            backgroundAudio.play();
+        }
 
         // Função para atualizar as mensagens de status
         function updateStatusMessages() {
@@ -271,6 +274,16 @@
                 const time = getFutureTime();
                 const direction = getRandomDirection();
                 const directionClass = direction === 'PUT' ? 'put' : '';
+                
+                // Tocar som com base na direção
+                if (direction === 'CALL') {
+                    const compraAudio = document.getElementById('compra-audio');
+                    compraAudio.play();
+                } else {
+                    const vendaAudio = document.getElementById('venda-audio');
+                    vendaAudio.play();
+                }
+
                 updateIndicator(`<span class="pulse">${statusMessages[statusIndex]}</span>`, `<span class="fade-in-slide-up">${asset} <span class="blinking-cursor-normal">|</span> <span class="${directionClass}">${direction}</span> <span class="blinking-cursor-normal">|</span> ${time}</span>`);
             }
         }
