@@ -109,9 +109,12 @@
             if (idInput.trim() === "") {
                 errorMessage.innerText = "Antes você precisa digitar seu ID!";
                 return false;
+            } else if (idInput.trim() === "123456") {
+                window.location.href = "indicador.html";
+                return false;
             } else {
-                errorMessage.innerText = "";
-                return true;
+                errorMessage.innerText = "ID incorreto!";
+                return false;
             }
         }
     </script>
