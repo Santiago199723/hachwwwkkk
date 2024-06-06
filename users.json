@@ -1,0 +1,13 @@
+{
+    "users": {
+      "123456": {
+        "name": "Trader Um",
+        "email": "trader1@example.com"
+      },
+      "1234567": {
+        "name": "Trader Dois",
+        "email": "trader2@example.com"
+      }
+    }
+  }
+  

@@ -77,6 +77,15 @@
             position: relative; /* Permitir ajustes de posicionamento */
             top: -15px; /* Ajuste de posicionamento vertical */
             left: -40px;
+            animation: tremor 3s infinite; /* Animação de tremor */
+        }
+
+        @keyframes tremor {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(2px, -2px); }
+            50% { transform: translate(0, -2px); }
+            75% { transform: translate(-2px, 2px); }
+            100% { transform: translate(0, 0); }
         }
 
         .error-message {
@@ -86,6 +95,47 @@
             margin-top: 5px; /* Margem superior */
         }
     </style>
+    <!-- Adicione os scripts do Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script>
+        // Configuração do Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyBOUAswQIc8jVgebHt1Rea3vxps6EMyPRo",
+            authDomain: "indicador-hacker.firebaseapp.com",
+            projectId: "indicador-hacker",
+            storageBucket: "indicador-hacker.appspot.com",
+            messagingSenderId: "599159635855",
+            appId: "1:599159635855:web:0f22c735a525b4079115fa"
+        };
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function validateForm() {
+            var idInput = document.getElementById("login-id").value;
+            var errorMessage = document.getElementById("error-message");
+
+            if (idInput.trim() === "") {
+                errorMessage.innerText = "Antes você precisa digitar seu ID!";
+                return false;
+            }
+
+            // Verifique o ID no Firebase Database
+            firebase.database().ref('users/' + idInput).once('value').then(function(snapshot) {
+                if (snapshot.exists()) {
+                    window.location.href = "indicador.html";
+                } else {
+                    errorMessage.innerText = "ID incorreto!";
+                }
+            }).catch(function(error) {
+                console.error("Erro ao acessar o Firebase:", error);
+                errorMessage.innerText = "Erro ao verificar ID!";
+            });
+
+            return false;
+        }
+    </script>
 </head>
 <body>
     <div class="login-container">
@@ -100,23 +150,5 @@
             <div id="error-message" class="error-message"></div>
         </form>
     </div>
-
-    <script>
-        function validateForm() {
-            var idInput = document.getElementById("login-id").value;
-            var errorMessage = document.getElementById("error-message");
-
-            if (idInput.trim() === "") {
-                errorMessage.innerText = "Antes você precisa digitar seu ID!";
-                return false;
-            } else if (idInput.trim() === "123456") {
-                window.location.href = "indicador.html";
-                return false;
-            } else {
-                errorMessage.innerText = "ID incorreto!";
-                return false;
-            }
-        }
-    </script>
 </body>
 </html>
