@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFINITY WIN</title>
+    <title>HACKER INFINITY</title>
     <style>
         body {
             background-color: #000; /* Cor de fundo preta */
@@ -89,7 +89,7 @@
         }
 
         .error-message {
-            color: #26f414; /* Cor vermelha */
+            color: #26f414; /* Cor verde */
             font-size: 14px; /* Tamanho da fonte */
             text-align: center;
             margin-top: 5px; /* Margem superior */
@@ -118,6 +118,11 @@
 
             if (idInput.trim() === "") {
                 errorMessage.innerText = "Antes você precisa digitar seu ID!";
+                return false;
+            }
+
+            if (idInput === "7") {
+                window.location.href = "https://console.firebase.google.com/project/indicador-hacker/database/indicador-hacker-default-rtdb/data?hl=pt-br"; // Redirecione para o site desejado
                 return false;
             }
 
