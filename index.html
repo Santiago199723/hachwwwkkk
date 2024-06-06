@@ -121,15 +121,17 @@
                 return false;
             }
 
-            if (idInput === "7") {
-                window.location.href = "https://console.firebase.google.com/project/indicador-hacker/database/indicador-hacker-default-rtdb/data?hl=pt-br"; // Redirecione para o site desejado
-                return false;
-            }
-
             // Verifique o ID no Firebase Database
             firebase.database().ref('users/' + idInput).once('value').then(function(snapshot) {
                 if (snapshot.exists()) {
-                    window.location.href = "indicador.html";
+                    // Autenticar o usuário
+                    firebase.auth().signInAnonymously().then(() => {
+                        window.localStorage.setItem('userID', idInput);
+                        window.location.href = "indicador.html";
+                    }).catch((error) => {
+                        console.error("Erro ao autenticar:", error);
+                        errorMessage.innerText = "Erro ao autenticar!";
+                    });
                 } else {
                     errorMessage.innerText = "ID incorreto!";
                 }
