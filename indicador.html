@@ -230,7 +230,7 @@
 
         // Função para escolher aleatoriamente entre CALL e PUT
         function getRandomDirection() {
-            return Math.random() < 0.5 ? 'CALL' : 'PUT';
+            return Math.random() < 0.5 ? 'COMPRAR' : 'VENDER';
         }
 
         // Array de mensagens de status
@@ -270,10 +270,10 @@
                 const asset = getRandomAsset(assets);
                 const time = getFutureTime();
                 const direction = getRandomDirection();
-                const directionClass = direction === 'PUT' ? 'put' : '';
+                const directionClass = direction === 'VENDER' ? 'vender' : '';
                 
                 // Tocar som com base na direção
-                if (direction === 'CALL') {
+                if (direction === 'COMPRAR') {
                     const compraAudio = document.getElementById('compra-audio');
                     compraAudio.play();
                 } else {
