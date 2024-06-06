@@ -91,12 +91,6 @@
             color: #00FF00;
             animation: blink-fast 0.4s step-end infinite;
         }
-        .blinking-cursor-normal {
-            font-weight: bold;
-            font-size: 1em;
-            color: #00FF00;
-            animation: blink-normal 1s step-end infinite;
-        }
         @keyframes blink-fast {
             from, to {
                 color: transparent;
@@ -104,6 +98,12 @@
             50% {
                 color: #00FF00;
             }
+        }
+        .blinking-cursor-normal {
+            font-weight: bold;
+            font-size: 1em;
+            color: #00FF00;
+            animation: blink-normal 1s step-end infinite;
         }
         @keyframes blink-normal {
             from, to {
@@ -113,8 +113,9 @@
                 color: #00FF00;
             }
         }
-        .vender {
-            color: red;
+        .fade-in-slide-up {
+            opacity: 0;
+            animation: fadeInSlideUp 2s forwards;
         }
         @keyframes fadeInSlideUp {
             from {
@@ -126,37 +127,71 @@
                 transform: translateY(0);
             }
         }
-        .fade-in-slide-up {
-            animation: fadeInSlideUp 1s ease-in-out;
+        .slide-in-from-left {
+            opacity: 0;
+            animation: slideInFromLeft 1.5s forwards;
         }
         @keyframes slideInFromLeft {
             from {
-                transform: translateX(-100%);
                 opacity: 0;
+                transform: translateX(-100%);
             }
             to {
-                transform: translateX(0);
                 opacity: 1;
+                transform: translateX(0);
             }
         }
-        .slide-in-from-left {
-            animation: slideInFromLeft 1s ease-in-out;
+        .pulse {
+            animation: pulse 2s infinite;
         }
         @keyframes pulse {
-            0% {
+            0%, 100% {
                 transform: scale(1);
             }
             50% {
                 transform: scale(1.05);
             }
-            100% {
-                transform: scale(1);
-            }
-        }
-        .pulse {
-            animation: pulse 7s infinite;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script>
+        // Configuração do Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyBOUAswQIc8jVgebHt1Rea3vxps6EMyPRo",
+            authDomain: "indicador-hacker.firebaseapp.com",
+            projectId: "indicador-hacker",
+            storageBucket: "indicador-hacker.appspot.com",
+            messagingSenderId: "599159635855",
+            appId: "1:599159635855:web:0f22c735a525b4079115fa"
+        };
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Verifica se o usuário está autenticado
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // Usuário está autenticado, verificar ID
+                var userID = window.localStorage.getItem('userID');
+                if (!userID) {
+                    window.location.href = 'login.html';
+                }
+            } else {
+                // Redireciona para a página de login se não estiver autenticado
+                window.location.href = 'login.html';
+            }
+        });
+
+        function startHacking() {
+            var hackSound = document.getElementById('hack-sound');
+            hackSound.play();
+            document.getElementById('status').innerText = "Hacking em andamento...";
+            setTimeout(function() {
+                document.getElementById('status').innerText = "Hacking concluído!";
+            }, 5000);
+        }
+    </script>
 </head>
 <body>
     <video autoplay muted loop class="video-background">
@@ -164,7 +199,6 @@
         Your browser does not support the video tag.
     </video>
 
-    <!-- Novo elemento de áudio -->
     <audio id="background-audio" src="inicio.mp3" autoplay></audio>
     <audio id="compra-audio" src="compra.mp3"></audio>
     <audio id="venda-audio" src="venda.mp3"></audio>
@@ -230,7 +264,7 @@
 
         // Função para escolher aleatoriamente entre CALL e PUT
         function getRandomDirection() {
-            return Math.random() < 0.5 ? 'COMPRAR' : 'VENDER';
+            return Math.random() < 0.5 ? 'CALL' : 'PUT';
         }
 
         // Array de mensagens de status
@@ -270,10 +304,10 @@
                 const asset = getRandomAsset(assets);
                 const time = getFutureTime();
                 const direction = getRandomDirection();
-                const directionClass = direction === 'VENDER' ? 'vender' : '';
+                const directionClass = direction === 'PUT' ? 'put' : '';
                 
                 // Tocar som com base na direção
-                if (direction === 'COMPRAR') {
+                if (direction === 'CALL') {
                     const compraAudio = document.getElementById('compra-audio');
                     compraAudio.play();
                 } else {
@@ -285,5 +319,6 @@
             }
         }
     </script>
+
 </body>
 </html>
